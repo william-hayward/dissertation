@@ -5,11 +5,16 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NotificationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.notification_activity)
+        addDoseToDatabase()
 
 
 
@@ -27,12 +32,19 @@ class NotificationActivity : AppCompatActivity() {
                 startActivity(intent)
                 return true
             }
-            R.id.AddAlarm -> {
-                val intent = Intent(this, AddAlarmActivity::class.java)
-                startActivity(intent)
-                return true
-            }
         }
         return false
+    }
+
+    fun addDoseToDatabase(){
+        lifecycleScope.launch {
+            val db = DosesDatabase.getDatabase(application)
+            var id = 1L
+
+            withContext(Dispatchers.IO) {
+                db.DosesDao().addDose(id)
+            }
+        }
+
     }
 }
