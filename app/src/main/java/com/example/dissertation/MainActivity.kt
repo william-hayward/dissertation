@@ -25,19 +25,17 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMainBinding
-    private lateinit var picker : MaterialTimePicker
-    private lateinit var calender : Calendar
-    private lateinit var alarmManager : AlarmManager
-    private lateinit var pendingIntent : PendingIntent
+    lateinit var binding : ActivityMainBinding
+    lateinit var picker : MaterialTimePicker
+    lateinit var calender : Calendar
+    lateinit var alarmManager : AlarmManager
+    lateinit var pendingIntent : PendingIntent
 
     val dosesList = mutableListOf<Doses>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
+        
         //initDatabase()
         getFromDatabase()
 
@@ -117,7 +115,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun PickTime(){
+    fun PickTime(){
         picker = MaterialTimePicker.Builder()
             .setTimeFormat(TimeFormat.CLOCK_12H)
             .setHour(12)
@@ -145,7 +143,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun SetTime(){
+    fun SetTime(){
         alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(this, Receiver::class.java)
         pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_MUTABLE)
@@ -157,7 +155,7 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Alarm Has Been Set.", Toast.LENGTH_SHORT).show()
     }
 
-    private fun cancel(){
+    fun cancel(){
         alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(this, Receiver::class.java)
         pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_MUTABLE)
